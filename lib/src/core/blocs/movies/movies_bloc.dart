@@ -18,10 +18,7 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
         final moviesService = serviceLocator<IMoviesService>();
         final response = await moviesService.fetchMovies(event.filter);
         if (response.success && response.data != null) {
-          yield MoviesStateLoaded(
-            movies: response.data.movies,
-            type: event.filter,
-          );
+          yield MoviesStateLoaded(movies: response.data.results);
         } else {
           yield MoviesStateFailure(error: response.error);
         }

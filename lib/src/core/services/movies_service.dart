@@ -6,7 +6,7 @@ class MoviesService implements IMoviesService {
   MoviesService();
 
   @override
-  Future<RequestResult<ResultMovies>> fetchMovies(String filter) async {
+  Future<RequestResult<ResultModel>> fetchMovies(String filter) async {
     final moviesRepository = serviceLocator<IMoviesRepository>();
     final response = await moviesRepository.fecthMovies(filter);
     return response;

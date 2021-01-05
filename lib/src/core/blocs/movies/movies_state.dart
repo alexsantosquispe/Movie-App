@@ -12,16 +12,12 @@ class MoviesInitial extends MoviesState {}
 class MoviesStateLoading extends MoviesState {}
 
 class MoviesStateLoaded extends MoviesState {
-  const MoviesStateLoaded({
-    @required this.movies,
-    @required this.type,
-  });
+  const MoviesStateLoaded({@required this.movies});
 
   final List<Movie> movies;
-  final String type;
 
   @override
-  List<Object> get props => [movies, type];
+  List<Object> get props => [movies];
 }
 
 class MoviesStateFailure extends MoviesState {

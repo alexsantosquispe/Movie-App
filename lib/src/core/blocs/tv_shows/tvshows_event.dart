@@ -1,8 +1,17 @@
 part of 'tvshows_bloc.dart';
 
-abstract class TvshowsEvent extends Equatable {
-  const TvshowsEvent();
+abstract class TvShowsEvent extends Equatable {
+  const TvShowsEvent();
 
   @override
   List<Object> get props => [];
+}
+
+class FetchTvShows extends TvShowsEvent {
+  const FetchTvShows(this.filter);
+
+  final String filter;
+
+  @override
+  List<Object> get props => [filter];
 }

@@ -7,7 +7,7 @@ class MoviesRepository implements IMoviesRepository {
   MoviesRepository();
 
   @override
-  Future<RequestResult<ResultMovies>> fecthMovies(String filter) async {
+  Future<RequestResult<ResultModel>> fecthMovies(String filter) async {
     final moviesApi = serviceLocator<IMoviesApi>();
     return await moviesApi.getMovies(filter);
   }

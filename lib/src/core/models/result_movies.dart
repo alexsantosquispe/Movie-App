@@ -1,39 +1,55 @@
 import 'package:movie_app/src/core/models/models.dart';
+import 'package:movie_app/src/core/models/tv_show.dart';
 
-class ResultMovies {
-  ResultMovies({this.page, this.movies, this.totalPages, this.totalResults});
+class ResultModel<T> {
+  ResultModel({this.page, this.results, this.totalPages, this.totalResults});
 
   final int page;
-  final List<Movie> movies;
+  final List<T> results;
   final int totalPages;
   final int totalResults;
 
   // ignore: sort_constructors_first
-  factory ResultMovies.fromJson(Map<String, dynamic> json) {
-    final List<Movie> movies = [];
+  factory ResultModel.fromJson(Map<String, dynamic> json) {
+    final List<T> results = [];
+    final Type type = T.runtimeType;
     try {
       if (json['results'] != null) {
-        json['results'].forEach((item) {
-          movies.add(Movie.fromJson(item));
-        });
+        if (type == Movie) {
+          json['results'].forEach((item) {
+            results.add(Movie.fromJson(item) as T);
+          });
+        } else {
+          json['results'].forEach((item) {
+            results.add(TvShow.fromJson(item) as T);
+          });
+        }
       }
-      return ResultMovies(
+      return ResultModel<T>(
         page: json['page'],
-        movies: movies,
+        results: results,
         totalPages: json['total_pages'],
         totalResults: json['total_results'],
       );
     } catch (e) {
       print(e.error);
     }
-    return ResultMovies();
+    return ResultModel();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
+    final Type type = T.runtimeType;
+
     data['page'] = page;
-    if (movies != null) {
-      data['results'] = movies.map((Movie item) => item.toJson()).toList();
+    if (results != null) {
+      data['results'] = results.map((T item) {
+        if (type == Movie) {
+          return (item as Movie).toJson();
+        } else {
+          return (item as TvShow).toJson();
+        }
+      }).toList();
     }
     data['total_pages'] = totalPages;
     data['total_results'] = totalResults;
